@@ -5,8 +5,15 @@ import { favoriteRecipe, unFavoriteRecipe } from '../actions';
 
 class RecipeItem extends Component {
 
+  // Checks if the recipe exists in the favoriteRecipeList
   isFav(recipe, favoriteRecipes){
-    return (favoriteRecipes.indexOf(recipe) !== -1)
+    let result = false;
+    favoriteRecipes.forEach((favRecipe, index) => {
+      if (favRecipe.title === recipe.title){
+        result = true;
+      }
+    })
+    return result;
   }
 
   render () {

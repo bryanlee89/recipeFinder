@@ -17,7 +17,7 @@ class SearchRecipes extends Component {
 
   search() {
     let {ingredients, dish} = this.state;
-    const url = `http://www.recipepuppy.com/api/?i=${ingredients}&q=${dish}`
+    const url = `https://www.recipepuppy.com/api/?i=${ingredients}&q=${dish}`
 
     fetch(url, {
       method: 'GET'
@@ -26,7 +26,6 @@ class SearchRecipes extends Component {
         this.props.setRecipe(json.results)
       })
       // .then(json => console.log('recipes', json.results))
-
   }
 
   render() {

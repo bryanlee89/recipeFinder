@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux';
-import { SET_RECIPE, FAVORITE_RECIPE, UN_FAVORITE_RECIPE } from '../actions'
+import { SET_RECIPE, FAVORITE_RECIPE, UN_FAVORITE_RECIPE } from '../actions';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 function recipes(state = [], action) {
   switch(action.type){
@@ -13,14 +16,20 @@ function recipes(state = [], action) {
 function favoriteRecipes(state = [], action) {
   switch(action.type) {
     case FAVORITE_RECIPE:
-      state = [...state, action.recipe]
-      return state;
+      let newState = [...state, action.recipe]
+      cookies.set('favorites', state, { path: '/'})
+      return newState;
     case UN_FAVORITE_RECIPE:
       let unFavState = [...state];
       unFavState.splice(unFavState.indexOf(action.recipe), 1)
+      cookies.set('favorites', unFavState, { path: '/'})
       return unFavState;
     default:
-      return state;
+      if (cookies.get('favorites')){
+        return cookies.get('favorites');
+      } else {
+        return []
+      }
   }
 }
 
